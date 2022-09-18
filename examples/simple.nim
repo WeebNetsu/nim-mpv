@@ -2,38 +2,38 @@ import os
 import mpv
 
 proc main(): int =
-  result = 1
-  
-  if paramCount() != 1:
-    echo "pass a single media file as argument"
-    return
+    result = 1
 
-  let ctx = mpv.create()
-  if ctx.isNil:
-    echo "failed creating mpv context"
-    return
-  defer: mpv.terminate_destroy(ctx)
+    if paramCount() != 1:
+        echo "pass a single media file as argument"
+        return
 
-  # Enable default key bindings, so the user can actually interact with
-  # the player (and e.g. close the window).
-  ctx.set_option("terminal", "yes")
-  ctx.set_option("input-default-bindings", "yes")
-  ctx.set_option("input-vo-keyboard", "yes")
-  ctx.set_option("osc", true)
+    let ctx = mpv.create()
+    if ctx.isNil:
+        echo "failed creating mpv context"
+        return
+    defer: mpv.terminate_destroy(ctx)
 
-  # Done setting up options.
-  check_error ctx.initialize()
+    # Enable default key bindings, so the user can actually interact with
+    # the player (and e.g. close the window).
+    ctx.set_option("terminal", "yes")
+    ctx.set_option("input-default-bindings", "yes")
+    ctx.set_option("input-vo-keyboard", "yes")
+    ctx.set_option("osc", true)
 
-  # Play this file.
-  ctx.command("loadfile", paramStr(1))
+    # Done setting up options.
+    check_error ctx.initialize()
 
-  while true:
-    let event = ctx.wait_event(10000)
-    echo "event: ", mpv.event_name(event.event_id)
-    if event.event_id == mpv.EVENT_SHUTDOWN:
-      break
+    # Play this file.
+    ctx.command("loadfile", paramStr(1))
 
-  return 0
+    while true:
+        let event = ctx.wait_event(10000)
+        echo "event: ", mpv.event_name(event.event_id)
+        if event.event_id == mpv.EVENT_SHUTDOWN:
+            break
+
+    return 0
 
 
 system.quit(main())
