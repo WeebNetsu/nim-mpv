@@ -1,3 +1,5 @@
 examples/simple
 tests/test1
 examples/*.mp3
+examples/complex
+.vscode/
