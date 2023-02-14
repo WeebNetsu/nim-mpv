@@ -4,6 +4,7 @@ import mpv
 import pkg/ncurses
 
 proc keypress(): int =
+    # this function just returns the key that was pressed
     var pwin = initscr()
     raw()
     keypad(pwin, true)
@@ -14,6 +15,7 @@ proc keypress(): int =
     # while true:
     let ch: cint = getch()
 
+    # ignore the below, it was just for testing
     # case ch
     # of KEY_F(2):
     #     printw("F2 Key pressed\n")
@@ -62,17 +64,24 @@ proc main() =
 
     # Play this file.
     ctx.command("loadfile", paramStr(1))
+    var paused = false
 
     while true:
         let
             kp = keypress()
             event = ctx.wait_event(10000)
 
+        # we can put all our keypress events here!
         case kp
         of ord(' '):
             # printw("SPACES\n")
             # ctx.command("pause", "yes")
-            checkMpvError(ctx.set_option_string("pause", "yes"))
+            if paused:
+                checkMpvError(ctx.set_option_string("pause", "no"))
+            else:
+                checkMpvError(ctx.set_option_string("pause", "yes"))
+
+            paused = not paused
         of ord('q'):
             break
         else:
