@@ -15,3 +15,8 @@ There are a few examples you can run inside the `examples` directory.
 ### Complex Example
 
 `complex.nim` shows you a slightly more complex example of how you can use this library, this includes getting keyboard input (using [ncurses](https://nimble.directory/pkg/ncurses)), then using that input to manipulate MPV.
+
+## Dependencies
+
+- [mpv](https://mpv.io/installation/)
+- [libmpv-dev](https://community.linuxmint.com/software/view/libmpv-dev)
