@@ -8,11 +8,12 @@ srcDir        = "src"
 # bin           = @["mpv"]
 
 # Dependencies
-requires "nim >= 1.6.6"
+requires "nim >= 2.2.4"
 requires "nimterop >= 0.6.13"
 
 # optionally to run the complex.nim file
-# requires "ncurses >= 1.0.2"
+requires "ncurses >= 1.0.2"
 
 task examples, "Build examples":
   exec "nim c examples/simple.nim"
+  exec "nim c examples/complex.nim"
